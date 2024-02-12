@@ -49,4 +49,10 @@ public interface PetApi {
           @ApiResponse(code = 200, message = "Successful operation"),
           @ApiResponse(code = 400, message = "Invalid status value")})
     ResponseEntity<List<Pet>> findByStatuses(@ApiParam(value = "Status values that need to be considered for filter", allowableValues = "available, pending, sold", allowMultiple = true, required = true) PetStatus[] status);
+
+    @ApiOperation(value = "Finds pets by tags", notes = "Multiple tags can be provided with comma separated string. Use Tag1, Tag2, Tag3 for testing", response = List.class)
+    @ApiResponses(value = {
+          @ApiResponse(code = 200, message = "Successful operation"),
+          @ApiResponse(code = 400, message = "Invalid tag value")})
+    ResponseEntity<List<Pet>> findByTags(@ApiParam(value = "Tags to filter by", allowMultiple = true, required = true) List<String> tags);
 }

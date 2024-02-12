@@ -50,4 +50,9 @@ public class PetController implements PetApi {
     public ResponseEntity<List<Pet>> findByStatuses(@RequestParam @Valid PetStatus[] status) {
         return ResponseEntity.ok(petService.findByStatuses(status));
     }
+
+    @Override @GetMapping("/findByTags")
+    public ResponseEntity<List<Pet>> findByTags(@RequestParam @Valid List<String> tags) {
+        return ResponseEntity.ok(petService.findByTags(tags));
+    }
 }

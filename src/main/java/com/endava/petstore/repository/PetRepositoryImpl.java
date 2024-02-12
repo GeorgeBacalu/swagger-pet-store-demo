@@ -90,4 +90,9 @@ public class PetRepositoryImpl implements PetRepository {
         List<String> statusList = Arrays.stream(statuses).map(Enum::name).toList();
         return findAll().stream().filter(pet -> statusList.contains(pet.getStatus().name())).toList();
     }
+
+    @Override
+    public List<Pet> findByTags(List<String> tagNames) {
+        return findAll().stream().filter(pet -> pet.getTags().stream().map(Tag::getName).anyMatch(tagNames::contains)).toList();
+    }
 }

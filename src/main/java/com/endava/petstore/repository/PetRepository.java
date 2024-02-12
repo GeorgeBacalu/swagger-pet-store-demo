@@ -18,4 +18,6 @@ public interface PetRepository {
     void deleteById(Long id);
 
     List<Pet> findByStatuses(PetStatus[] statuses);
+
+    List<Pet> findByTags(List<String> tagNames);
 }

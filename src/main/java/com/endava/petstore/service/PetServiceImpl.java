@@ -1,6 +1,7 @@
 package com.endava.petstore.service;
 
 import com.endava.petstore.enums.PetStatus;
+import com.endava.petstore.exception.ResourceNotFoundException;
 import com.endava.petstore.model.Pet;
 import com.endava.petstore.repository.PetRepository;
 import lombok.RequiredArgsConstructor;
@@ -41,5 +42,13 @@ public class PetServiceImpl implements PetService {
     @Override
     public List<Pet> findByStatuses(PetStatus[] statuses) {
         return petRepository.findByStatuses(statuses);
+    }
+
+    @Override
+    public List<Pet> findByTags(List<String> tagNames) {
+        if (tagNames.isEmpty()) {
+            throw new ResourceNotFoundException("No tags were provided");
+        }
+        return petRepository.findByTags(tagNames);
     }
 }
