@@ -1,6 +1,7 @@
 package com.endava.petstore.repository;
 
 import com.endava.petstore.enums.PetStatus;
+import com.endava.petstore.exception.ResourceNotFoundException;
 import com.endava.petstore.model.Category;
 import com.endava.petstore.model.Pet;
 import com.endava.petstore.model.Tag;
@@ -11,6 +12,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.endava.petstore.constants.Constants.PET_NOT_FOUND;
 
 @Repository
 public class PetRepositoryImpl implements PetRepository {
@@ -60,7 +63,7 @@ public class PetRepositoryImpl implements PetRepository {
 
     @Override
     public Pet findById(Long id) {
-        return pets.values().stream().filter(pet -> pet.getId().equals(id)).findFirst().orElseThrow(() -> new RuntimeException("Pet with id " + id + " not found"));
+        return pets.values().stream().filter(pet -> pet.getId().equals(id)).findFirst().orElseThrow(() -> new ResourceNotFoundException(String.format(PET_NOT_FOUND, id)));
     }
 
     @Override
