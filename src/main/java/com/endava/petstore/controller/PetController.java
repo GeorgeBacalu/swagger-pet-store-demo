@@ -9,33 +9,36 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+import static org.springframework.http.MediaType.APPLICATION_XML_VALUE;
+
 @RestController
-@RequestMapping("/pet")
+@RequestMapping(value = "/pet", produces = {APPLICATION_JSON_VALUE, APPLICATION_XML_VALUE})
 @RequiredArgsConstructor
-public class PetController {
+public class PetController implements PetApi {
     private final PetService petService;
 
-    @GetMapping
+    @Override @GetMapping
     public ResponseEntity<List<Pet>> findAll() {
         return ResponseEntity.ok(petService.findAll());
     }
 
-    @GetMapping("/{id}")
+    @Override @GetMapping("/{id}")
     public ResponseEntity<Pet> findById(@PathVariable Long id) {
         return ResponseEntity.ok(petService.findById(id));
     }
 
-    @PostMapping
+    @Override @PostMapping(consumes = {APPLICATION_JSON_VALUE, APPLICATION_XML_VALUE})
     public ResponseEntity<Pet> save(@RequestBody Pet pet) {
         return ResponseEntity.status(HttpStatus.CREATED).body(petService.save(pet));
     }
 
-    @PutMapping
+    @Override @PutMapping(consumes = {APPLICATION_JSON_VALUE, APPLICATION_XML_VALUE})
     public ResponseEntity<Pet> update(@RequestBody Pet pet) {
         return ResponseEntity.ok(petService.update(pet));
     }
 
-    @DeleteMapping("/{id}")
+    @Override @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteById(@PathVariable Long id) {
         petService.deleteById(id);
         return ResponseEntity.noContent().build();
