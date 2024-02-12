@@ -3,14 +3,17 @@ package com.endava.petstore.repository;
 import com.endava.petstore.enums.PetStatus;
 import com.endava.petstore.exception.ResourceNotFoundException;
 import com.endava.petstore.model.Category;
+import com.endava.petstore.model.HttpResponse;
 import com.endava.petstore.model.Pet;
 import com.endava.petstore.model.Tag;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.PostConstruct;
 import java.util.*;
 
 import static com.endava.petstore.constants.Constants.PET_NOT_FOUND;
+import static com.endava.petstore.constants.Constants.PET_UPDATED;
 
 @Repository
 public class PetRepositoryImpl implements PetRepository {
@@ -94,5 +97,13 @@ public class PetRepositoryImpl implements PetRepository {
     @Override
     public List<Pet> findByTags(List<String> tagNames) {
         return findAll().stream().filter(pet -> pet.getTags().stream().map(Tag::getName).anyMatch(tagNames::contains)).toList();
+    }
+
+    @Override
+    public HttpResponse updateWithFormData(Long id, String name, String status) {
+        Pet pet = findById(id);
+        pet.setName(name);
+        pet.setStatus(PetStatus.valueOf(status));
+        return new HttpResponse(HttpStatus.OK.value(), "unknown", String.format(PET_UPDATED, id));
     }
 }

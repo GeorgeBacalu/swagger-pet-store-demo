@@ -1,9 +1,12 @@
 package com.endava.petstore.controller;
 
 import com.endava.petstore.enums.PetStatus;
+import com.endava.petstore.model.HttpResponse;
 import com.endava.petstore.model.Pet;
+import com.endava.petstore.model.PetUpdateFormDataRequest;
 import io.swagger.annotations.*;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 import java.util.List;
 
@@ -55,4 +58,10 @@ public interface PetApi {
           @ApiResponse(code = 200, message = "Successful operation"),
           @ApiResponse(code = 400, message = "Invalid tag value")})
     ResponseEntity<List<Pet>> findByTags(@ApiParam(value = "Tags to filter by", allowMultiple = true, required = true) List<String> tags);
+
+    @ApiOperation(value = "Updates a pet in the store with form data", response = HttpResponse.class)
+    @ApiResponses(value = {
+          @ApiResponse(code = 200, message = "Successful operation"),
+          @ApiResponse(code = 405, message = "Invalid input")})
+    ResponseEntity<HttpResponse> updateWithFormData(@ApiParam(value = "ID of pet that needs to be updated", example = "1", required = true) Long id, @ModelAttribute PetUpdateFormDataRequest petUpdateRequest);
 }

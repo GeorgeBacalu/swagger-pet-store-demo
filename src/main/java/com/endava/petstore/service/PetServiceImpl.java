@@ -2,6 +2,7 @@ package com.endava.petstore.service;
 
 import com.endava.petstore.enums.PetStatus;
 import com.endava.petstore.exception.ResourceNotFoundException;
+import com.endava.petstore.model.HttpResponse;
 import com.endava.petstore.model.Pet;
 import com.endava.petstore.repository.PetRepository;
 import lombok.RequiredArgsConstructor;
@@ -50,5 +51,10 @@ public class PetServiceImpl implements PetService {
             throw new ResourceNotFoundException("No tags were provided");
         }
         return petRepository.findByTags(tagNames);
+    }
+
+    @Override
+    public HttpResponse updateWithFormData(Long id, String name, String status) {
+        return petRepository.updateWithFormData(id, name, status);
     }
 }

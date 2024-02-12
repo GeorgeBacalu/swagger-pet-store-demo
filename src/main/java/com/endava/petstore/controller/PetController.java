@@ -1,7 +1,9 @@
 package com.endava.petstore.controller;
 
 import com.endava.petstore.enums.PetStatus;
+import com.endava.petstore.model.HttpResponse;
 import com.endava.petstore.model.Pet;
+import com.endava.petstore.model.PetUpdateFormDataRequest;
 import com.endava.petstore.service.PetService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -11,8 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
-import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
-import static org.springframework.http.MediaType.APPLICATION_XML_VALUE;
+import static org.springframework.http.MediaType.*;
 
 @RestController
 @RequestMapping(value = "/pet", produces = {APPLICATION_JSON_VALUE, APPLICATION_XML_VALUE})
@@ -54,5 +55,10 @@ public class PetController implements PetApi {
     @Override @GetMapping("/findByTags")
     public ResponseEntity<List<Pet>> findByTags(@RequestParam @Valid List<String> tags) {
         return ResponseEntity.ok(petService.findByTags(tags));
+    }
+
+    @Override @PostMapping(value = "/{id}", consumes = MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<HttpResponse> updateWithFormData(@PathVariable Long id, PetUpdateFormDataRequest petUpdateRequest) {
+        return ResponseEntity.ok(petService.updateWithFormData(id, petUpdateRequest.getName(), petUpdateRequest.getStatus()));
     }
 }
