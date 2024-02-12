@@ -1,5 +1,6 @@
 package com.endava.petstore.repository;
 
+import com.endava.petstore.enums.PetStatus;
 import com.endava.petstore.model.Pet;
 
 import java.util.List;
@@ -15,4 +16,6 @@ public interface PetRepository {
     Pet update(Pet pet);
 
     void deleteById(Long id);
+
+    List<Pet> findByStatuses(PetStatus[] statuses);
 }

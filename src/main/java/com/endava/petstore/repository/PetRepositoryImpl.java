@@ -8,10 +8,7 @@ import com.endava.petstore.model.Tag;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static com.endava.petstore.constants.Constants.PET_NOT_FOUND;
 
@@ -51,7 +48,7 @@ public class PetRepositoryImpl implements PetRepository {
               .tags(List.of(
                     Tag.builder().id(5L).name("Tag5").build(),
                     Tag.builder().id(6L).name("Tag6").build()))
-              .status(PetStatus.PENDING)
+              .status(PetStatus.SOLD)
               .build();
         pets.put(pet3.getId(), pet3);
     }
@@ -86,5 +83,11 @@ public class PetRepositoryImpl implements PetRepository {
     public void deleteById(Long id) {
         Pet petToDelete = findById(id);
         pets.remove(petToDelete.getId());
+    }
+
+    @Override
+    public List<Pet> findByStatuses(PetStatus[] statuses) {
+        List<String> statusList = Arrays.stream(statuses).map(Enum::name).toList();
+        return findAll().stream().filter(pet -> statusList.contains(pet.getStatus().name())).toList();
     }
 }

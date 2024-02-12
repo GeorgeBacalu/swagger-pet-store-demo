@@ -1,5 +1,6 @@
 package com.endava.petstore.controller;
 
+import com.endava.petstore.enums.PetStatus;
 import com.endava.petstore.model.Pet;
 import io.swagger.annotations.*;
 import org.springframework.http.ResponseEntity;
@@ -42,4 +43,10 @@ public interface PetApi {
           @ApiResponse(code = 400, message = "Invalid ID supplied"),
           @ApiResponse(code = 404, message = "Pet not found")})
     ResponseEntity<Void> deleteById(@ApiParam(value = "Pet ID to delete", example = "1", required = true) Long id);
+
+    @ApiOperation(value = "Finds pets by status", notes = "Multiple status values can be provided with comma separated strings", response = List.class)
+    @ApiResponses(value = {
+          @ApiResponse(code = 200, message = "Successful operation"),
+          @ApiResponse(code = 400, message = "Invalid status value")})
+    ResponseEntity<List<Pet>> findByStatuses(@ApiParam(value = "Status values that need to be considered for filter", allowableValues = "available, pending, sold", allowMultiple = true, required = true) PetStatus[] status);
 }

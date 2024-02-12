@@ -1,5 +1,6 @@
 package com.endava.petstore.controller;
 
+import com.endava.petstore.enums.PetStatus;
 import com.endava.petstore.model.Pet;
 import com.endava.petstore.service.PetService;
 import lombok.RequiredArgsConstructor;
@@ -7,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
@@ -29,12 +31,12 @@ public class PetController implements PetApi {
     }
 
     @Override @PostMapping(consumes = {APPLICATION_JSON_VALUE, APPLICATION_XML_VALUE})
-    public ResponseEntity<Pet> save(@RequestBody Pet pet) {
+    public ResponseEntity<Pet> save(@RequestBody @Valid Pet pet) {
         return ResponseEntity.status(HttpStatus.CREATED).body(petService.save(pet));
     }
 
     @Override @PutMapping(consumes = {APPLICATION_JSON_VALUE, APPLICATION_XML_VALUE})
-    public ResponseEntity<Pet> update(@RequestBody Pet pet) {
+    public ResponseEntity<Pet> update(@RequestBody @Valid Pet pet) {
         return ResponseEntity.ok(petService.update(pet));
     }
 
@@ -42,5 +44,10 @@ public class PetController implements PetApi {
     public ResponseEntity<Void> deleteById(@PathVariable Long id) {
         petService.deleteById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @Override @GetMapping("/findByStatus")
+    public ResponseEntity<List<Pet>> findByStatuses(@RequestParam @Valid PetStatus[] status) {
+        return ResponseEntity.ok(petService.findByStatuses(status));
     }
 }
