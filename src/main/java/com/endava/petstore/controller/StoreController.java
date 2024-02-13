@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.http.MediaType.APPLICATION_XML_VALUE;
@@ -43,5 +44,10 @@ public class StoreController implements StoreApi {
     public ResponseEntity<Void> deleteOrderById(@PathVariable Long id) {
         storeService.deleteOrderById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @Override @GetMapping("/inventory")
+    public ResponseEntity<Map<String, Integer>> getInventoryByStatus() {
+        return ResponseEntity.ok(storeService.getInventoryByStatus());
     }
 }

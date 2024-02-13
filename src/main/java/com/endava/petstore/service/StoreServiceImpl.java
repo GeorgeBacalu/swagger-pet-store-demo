@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -35,5 +36,10 @@ public class StoreServiceImpl implements StoreService {
     @Override
     public void deleteOrderById(Long id) {
         storeRepository.deleteOrderById(id);
+    }
+
+    @Override
+    public Map<String, Integer> getInventoryByStatus() {
+        return storeRepository.getInventoryByStatus();
     }
 }

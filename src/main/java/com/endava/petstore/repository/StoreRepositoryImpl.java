@@ -1,6 +1,7 @@
 package com.endava.petstore.repository;
 
 import com.endava.petstore.enums.OrderStatus;
+import com.endava.petstore.enums.PetStatus;
 import com.endava.petstore.exception.ResourceNotFoundException;
 import com.endava.petstore.model.Order;
 import lombok.RequiredArgsConstructor;
@@ -84,5 +85,14 @@ public class StoreRepositoryImpl implements StoreRepository {
     public void deleteOrderById(Long id) {
         Order orderToDelete = findOrderById(id);
         orders.remove(orderToDelete.getId());
+    }
+
+    @Override
+    public Map<String, Integer> getInventoryByStatus() {
+        Map<String, Integer> inventory = new HashMap<>();
+        for (PetStatus status : PetStatus.values()) {
+            inventory.put(status.name(), petRepository.findByStatuses(new PetStatus[]{status}).size());
+        }
+        return inventory;
     }
 }

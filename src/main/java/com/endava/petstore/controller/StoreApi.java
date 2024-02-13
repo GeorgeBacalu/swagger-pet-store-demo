@@ -5,6 +5,7 @@ import io.swagger.annotations.*;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
+import java.util.Map;
 
 @Api(value = "Store REST Controller", description = "Access to Petstore orders", tags = "store")
 public interface StoreApi {
@@ -42,4 +43,8 @@ public interface StoreApi {
           @ApiResponse(code = 400, message = "Invalid ID supplied"),
           @ApiResponse(code = 404, message = "Order not found")})
     ResponseEntity<Void> deleteOrderById(@ApiParam(value = "ID of order that needs to be deleted", example = "1", required = true) Long id);
+
+    @ApiOperation(value = "Returns pet inventories by status", notes = "Returns a map of status codes to quantities", response = Map.class)
+    @ApiResponse(code = 200, message = "Successful operation")
+    ResponseEntity<Map<String, Integer>> getInventoryByStatus();
 }
