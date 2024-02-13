@@ -1,5 +1,6 @@
 package com.endava.petstore.service;
 
+import com.endava.petstore.model.HttpResponse;
 import com.endava.petstore.model.User;
 import com.endava.petstore.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -60,5 +61,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteByUsername(String username) {
         userRepository.deleteByUsername(username);
+    }
+
+    @Override
+    public HttpResponse login(String username, String password) {
+        return userRepository.login(username, password);
+    }
+
+    @Override
+    public HttpResponse logout(String username) {
+        return userRepository.logout(username);
     }
 }

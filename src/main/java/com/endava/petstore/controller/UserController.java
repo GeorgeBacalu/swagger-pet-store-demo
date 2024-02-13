@@ -1,5 +1,6 @@
 package com.endava.petstore.controller;
 
+import com.endava.petstore.model.HttpResponse;
 import com.endava.petstore.model.User;
 import com.endava.petstore.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -69,5 +70,15 @@ public class UserController implements UserApi {
     public ResponseEntity<Void> deleteByUsername(@PathVariable String username) {
         userService.deleteByUsername(username);
         return ResponseEntity.noContent().build();
+    }
+
+    @Override @GetMapping("/login")
+    public ResponseEntity<HttpResponse> login(@RequestParam String username, @RequestParam String password) {
+        return ResponseEntity.ok(userService.login(username, password));
+    }
+
+    @Override @GetMapping("/logout")
+    public ResponseEntity<HttpResponse> logout(@RequestParam String username) {
+        return ResponseEntity.ok(userService.logout(username));
     }
 }

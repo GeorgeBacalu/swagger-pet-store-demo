@@ -13,9 +13,14 @@ public class Constants {
     public static final String ORDER_NOT_FOUND = "Order with id %s not found";
     public static final String USER_NOT_FOUND = "User with id %s not found";
     public static final String USERNAME_NOT_FOUND = "User with username %s not found";
+    public static final String INVALID_USER = "User with username %s and password %s not found";
+    public static final String USER_ALREADY_LOGGED_IN = "User with username %s already logged in";
+    public static final String USER_ALREADY_LOGGED_OUT = "User with username %s already logged out";
 
     public static final String PET_UPDATED = "Pet with id %s was updated";
     public static final String PET_UPLOADED_IMAGE = "additionalMetadata: %s%nFile uploaded to %s (%s bytes)";
+    public static final String USER_LOGGED_IN = "Logged in user session: %s";
+    public static final String USER_LOGGED_OUT = "Logged out: %s";
 
     public static final Long VALID_ID = 1L;
     public static final Long INVALID_ID = 999L;

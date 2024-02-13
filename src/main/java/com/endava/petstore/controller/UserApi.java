@@ -1,5 +1,6 @@
 package com.endava.petstore.controller;
 
+import com.endava.petstore.model.HttpResponse;
 import com.endava.petstore.model.User;
 import io.swagger.annotations.*;
 import org.springframework.http.ResponseEntity;
@@ -77,4 +78,17 @@ public interface UserApi {
           @ApiResponse(code = 400, message = "Invalid username supplied"),
           @ApiResponse(code = 404, message = "User not found")})
     ResponseEntity<Void> deleteByUsername(@ApiParam(value = "Username that needs to be deleted", required = true) String username);
+
+    @ApiOperation(value = "Logs user into the system", response = HttpResponse.class)
+    @ApiResponses(value = {
+          @ApiResponse(code = 200, message = "Successful operation"),
+          @ApiResponse(code = 400, message = "Invalid username/password supplied")})
+    ResponseEntity<HttpResponse> login(@ApiParam(value = "The username for login", required = true) String username,
+                                       @ApiParam(value = "The password for login", required = true) String password);
+
+    @ApiOperation(value = "Logs out current logged in user session")
+    @ApiResponses(value = {
+          @ApiResponse(code = 200, message = "Successful operation"),
+          @ApiResponse(code = 401, message = "Unauthorized")})
+    ResponseEntity<HttpResponse> logout(@ApiParam(value = "The username to logout", required = true) String username);
 }

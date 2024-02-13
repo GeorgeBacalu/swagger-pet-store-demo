@@ -1,7 +1,10 @@
 package com.endava.petstore.repository;
 
+import com.endava.petstore.exception.InvalidRequestException;
 import com.endava.petstore.exception.ResourceNotFoundException;
+import com.endava.petstore.model.HttpResponse;
 import com.endava.petstore.model.User;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.PostConstruct;
@@ -10,8 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.endava.petstore.constants.Constants.USERNAME_NOT_FOUND;
-import static com.endava.petstore.constants.Constants.USER_NOT_FOUND;
+import static com.endava.petstore.constants.Constants.*;
 
 @Repository
 public class UserRepositoryImpl implements UserRepository {
@@ -110,6 +112,29 @@ public class UserRepositoryImpl implements UserRepository {
     public void deleteByUsername(String username) {
         User userToDelete = findByUsername(username);
         users.remove(userToDelete.getId());
+    }
+
+    @Override
+    public HttpResponse login(String username, String password) {
+        User userToLogin = findByUsername(username);
+        if (userToLogin.isLoggedIn()) {
+            throw new InvalidRequestException(String.format(USER_ALREADY_LOGGED_IN, username));
+        }
+        if (!userToLogin.getPassword().equals(password)) {
+            throw new InvalidRequestException(String.format(INVALID_USER, username, password));
+        }
+        userToLogin.setLoggedIn(true);
+        return new HttpResponse(HttpStatus.OK.value(), "unknown", String.format(USER_LOGGED_IN, System.nanoTime()));
+    }
+
+    @Override
+    public HttpResponse logout(String username) {
+        User userToLogout = findByUsername(username);
+        if (!userToLogout.isLoggedIn()) {
+            throw new InvalidRequestException(String.format(USER_ALREADY_LOGGED_OUT, username));
+        }
+        userToLogout.setLoggedIn(false);
+        return new HttpResponse(HttpStatus.OK.value(), "unknown", String.format(USER_LOGGED_OUT, System.nanoTime()));
     }
 
     private User getUpdatedUser(User user, User userToUpdate) {

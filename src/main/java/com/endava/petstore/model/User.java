@@ -84,4 +84,7 @@ public class User implements Serializable {
     @ApiModelProperty(name = "userStatus", dataType = "int", value = "User Status")
     @NotNull(message = "User status must not be null")
     private Integer status;
+
+    @ApiModelProperty(name = "isLoggedIn", dataType = "boolean")
+    private boolean isLoggedIn = false;
 }
