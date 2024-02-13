@@ -132,7 +132,7 @@ class PetControllerIntegrationTest {
     }
 
     @Test
-    void findByStatuses_test() throws Exception {
+    void findByStatuses_shouldReturnPetsWithGivenStatuses() throws Exception {
         ResponseEntity<String> response = testRestTemplate.getForEntity(API_PETS + "/findByStatus?status=AVAILABLE&status=PENDING", String.class);
         then(response).isNotNull();
         then(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -141,7 +141,7 @@ class PetControllerIntegrationTest {
     }
 
     @Test
-    void findByTags_test() throws Exception {
+    void findByTags_shouldReturnPetsWithGivenTagNames() throws Exception {
         ResponseEntity<String> response = testRestTemplate.getForEntity(API_PETS + "/findByTags?tags=Tag1&tags=Tag2&tags=Tag3", String.class);
         then(response).isNotNull();
         then(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -150,7 +150,7 @@ class PetControllerIntegrationTest {
     }
 
     @Test
-    void findByTags_emptyList_test() {
+    void updateWithFormData_shouldModifyPetUsingFormData() {
         ResponseEntity<String> response = testRestTemplate.getForEntity(API_PETS + "/findByTags?tags=", String.class);
         then(response).isNotNull();
         then(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
@@ -158,7 +158,7 @@ class PetControllerIntegrationTest {
     }
 
     @Test
-    void updateWithFormData_test() {
+    void uploadImage_shouldAppendToPetPhotoUrls() {
         String name = "Test pet";
         String status = "AVAILABLE";
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>(); // build request body as multipart/form-data

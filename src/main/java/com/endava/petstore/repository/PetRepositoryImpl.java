@@ -63,7 +63,7 @@ public class PetRepositoryImpl implements PetRepository {
 
     @Override
     public Pet findById(Long id) {
-        return pets.values().stream().filter(pet -> pet.getId().equals(id)).findFirst().orElseThrow(() -> new ResourceNotFoundException(String.format(PET_NOT_FOUND, id)));
+        return findAll().stream().filter(pet -> pet.getId().equals(id)).findFirst().orElseThrow(() -> new ResourceNotFoundException(String.format(PET_NOT_FOUND, id)));
     }
 
     @Override

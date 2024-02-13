@@ -93,19 +93,19 @@ class PetRepositoryIntegrationTest {
     }
 
     @Test
-    void findByStatuses_test() {
+    void findByStatuses_shouldReturnPetsWithGivenStatuses() {
         PetStatus[] statuses = {PetStatus.AVAILABLE, PetStatus.PENDING};
         then(petRepository.findByStatuses(statuses)).isEqualTo(List.of(pet1, pet2));
     }
 
     @Test
-    void findByTags_test() {
+    void findByTags_shouldReturnPetsWithGivenTagNames() {
         List<String> tagNames = List.of("Tag1", "Tag2", "Tag3");
         then(petRepository.findByTags(tagNames)).isEqualTo(List.of(pet1, pet2));
     }
 
     @Test
-    void updateWithFormData_test() {
+    void updateWithFormData_shouldModifyPetUsingFormData() {
         String name = "Test pet";
         String status = "AVAILABLE";
         HttpResponse httpResponse = new HttpResponse(HttpStatus.OK.value(), "unknown", String.format(PET_UPDATED, VALID_ID));
@@ -113,7 +113,7 @@ class PetRepositoryIntegrationTest {
     }
 
     @Test
-    void uploadImage_test() {
+    void uploadImage_shouldAppendToPetPhotoUrls() {
         String additionalMetadata = "Test image";
         MultipartFile file = new MockMultipartFile("file", "test_image.png", IMAGE_JPEG_VALUE, "content".getBytes());
         HttpResponse httpResponse = new HttpResponse(HttpStatus.OK.value(), "unknown", String.format(PET_UPLOADED_IMAGE, additionalMetadata, file.getOriginalFilename(), file.getSize()));
