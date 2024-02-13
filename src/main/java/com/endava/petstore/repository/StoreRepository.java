@@ -18,4 +18,6 @@ public interface StoreRepository {
     void deleteOrderById(Long id);
 
     Map<String, Integer> getInventoryByStatus();
+
+    void deleteAllOrders();
 }

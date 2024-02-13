@@ -60,7 +60,7 @@ public class StoreRepositoryImpl implements StoreRepository {
 
     @Override
     public Order findOrderById(Long id) {
-        return orders.values().stream().filter(order -> order.getId().equals(id)).findFirst().orElseThrow(() -> new ResourceNotFoundException(String.format(ORDER_NOT_FOUND, id)));
+        return findAllOrders().stream().filter(order -> order.getId().equals(id)).findFirst().orElseThrow(() -> new ResourceNotFoundException(String.format(ORDER_NOT_FOUND, id)));
     }
 
     @Override
@@ -94,5 +94,10 @@ public class StoreRepositoryImpl implements StoreRepository {
             inventory.put(status.name(), petRepository.findByStatuses(new PetStatus[]{status}).size());
         }
         return inventory;
+    }
+
+    @Override
+    public void deleteAllOrders() {
+        orders.clear();
     }
 }

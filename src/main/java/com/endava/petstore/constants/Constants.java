@@ -19,4 +19,5 @@ public class Constants {
     public static final Long INVALID_ID = 999L;
 
     public static final String API_PETS = "/pet";
+    public static final String API_STORE = "/store";
 }
