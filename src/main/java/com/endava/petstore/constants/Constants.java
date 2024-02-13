@@ -13,4 +13,7 @@ public class Constants {
 
     public static final String PET_UPDATED = "Pet with id %s was updated";
     public static final String PET_UPLOADED_IMAGE = "additionalMetadata: %s%nFile uploaded to %s (%s bytes)";
+
+    public static final Long VALID_ID = 1L;
+    public static final Long INVALID_ID = 999L;
 }
