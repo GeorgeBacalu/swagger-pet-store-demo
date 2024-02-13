@@ -4,9 +4,11 @@ import com.endava.petstore.enums.PetStatus;
 import com.endava.petstore.model.HttpResponse;
 import com.endava.petstore.model.Pet;
 import com.endava.petstore.model.PetUpdateFormDataRequest;
+import com.endava.petstore.model.PetUploadImageRequest;
 import io.swagger.annotations.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -53,7 +55,7 @@ public interface PetApi {
           @ApiResponse(code = 400, message = "Invalid status value")})
     ResponseEntity<List<Pet>> findByStatuses(@ApiParam(value = "Status values that need to be considered for filter", allowableValues = "available, pending, sold", allowMultiple = true, required = true) PetStatus[] status);
 
-    @ApiOperation(value = "Finds pets by tags", notes = "Multiple tags can be provided with comma separated string. Use Tag1, Tag2, Tag3 for testing", response = List.class)
+    @ApiOperation(value = "Finds pets by tags", notes = "Multiple tags can be provided with comma separated strings. Use Tag1, Tag2, Tag3 for testing", response = List.class)
     @ApiResponses(value = {
           @ApiResponse(code = 200, message = "Successful operation"),
           @ApiResponse(code = 400, message = "Invalid tag value")})
@@ -63,5 +65,14 @@ public interface PetApi {
     @ApiResponses(value = {
           @ApiResponse(code = 200, message = "Successful operation"),
           @ApiResponse(code = 405, message = "Invalid input")})
-    ResponseEntity<HttpResponse> updateWithFormData(@ApiParam(value = "ID of pet that needs to be updated", example = "1", required = true) Long id, @ModelAttribute PetUpdateFormDataRequest petUpdateRequest);
+    ResponseEntity<HttpResponse> updateWithFormData(@ApiParam(value = "ID of pet that needs to be updated", example = "1", required = true) Long id,
+                                                    @ModelAttribute PetUpdateFormDataRequest petUpdateRequest);
+
+    @ApiOperation(value = "Uploads an image", response = HttpResponse.class)
+    @ApiResponses(value = {
+          @ApiResponse(code = 200, message = "Successful operation"),
+          @ApiResponse(code = 405, message = "Invalid input")})
+    ResponseEntity<HttpResponse> uploadImage(@ApiParam(value = "ID of pet to update", example = "1", required = true) Long id,
+                                             @ModelAttribute PetUploadImageRequest petUploadImageRequest,
+                                             @ApiParam(value = "File to upload") MultipartFile file);
 }

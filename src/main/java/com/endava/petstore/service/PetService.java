@@ -3,6 +3,7 @@ package com.endava.petstore.service;
 import com.endava.petstore.enums.PetStatus;
 import com.endava.petstore.model.HttpResponse;
 import com.endava.petstore.model.Pet;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -23,4 +24,6 @@ public interface PetService {
     List<Pet> findByTags(List<String> tagNames);
 
     HttpResponse updateWithFormData(Long id, String name, String status);
+
+    HttpResponse uploadImage(Long id, String additionalMetadata, MultipartFile file);
 }

@@ -7,6 +7,7 @@ import com.endava.petstore.model.Pet;
 import com.endava.petstore.repository.PetRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -56,5 +57,10 @@ public class PetServiceImpl implements PetService {
     @Override
     public HttpResponse updateWithFormData(Long id, String name, String status) {
         return petRepository.updateWithFormData(id, name, status);
+    }
+
+    @Override
+    public HttpResponse uploadImage(Long id, String additionalMetadata, MultipartFile file) {
+        return petRepository.uploadImage(id, additionalMetadata, file);
     }
 }

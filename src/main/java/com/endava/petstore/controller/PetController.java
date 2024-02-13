@@ -4,11 +4,13 @@ import com.endava.petstore.enums.PetStatus;
 import com.endava.petstore.model.HttpResponse;
 import com.endava.petstore.model.Pet;
 import com.endava.petstore.model.PetUpdateFormDataRequest;
+import com.endava.petstore.model.PetUploadImageRequest;
 import com.endava.petstore.service.PetService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -60,5 +62,10 @@ public class PetController implements PetApi {
     @Override @PostMapping(value = "/{id}", consumes = MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<HttpResponse> updateWithFormData(@PathVariable Long id, PetUpdateFormDataRequest petUpdateRequest) {
         return ResponseEntity.ok(petService.updateWithFormData(id, petUpdateRequest.getName(), petUpdateRequest.getStatus()));
+    }
+
+    @Override @PostMapping(value = "/{id}/uploadImage", consumes = MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<HttpResponse> uploadImage(@PathVariable Long id, PetUploadImageRequest petUploadImageRequest, @RequestPart MultipartFile file) {
+        return ResponseEntity.ok(petService.uploadImage(id, petUploadImageRequest.getAdditionalMetadata(), file));
     }
 }

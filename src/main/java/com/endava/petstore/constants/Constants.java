@@ -9,5 +9,8 @@ public class Constants {
     public static final String INVALID_REQUEST = "Invalid request: ";
 
     public static final String PET_NOT_FOUND = "Pet with id %s not found";
+    public static final String TAGS_NOT_FOUND = "No tags were provided";
+
     public static final String PET_UPDATED = "Pet with id %s was updated";
+    public static final String PET_UPLOADED_IMAGE = "additionalMetadata: %s%nFile uploaded to %s (%s bytes)";
 }

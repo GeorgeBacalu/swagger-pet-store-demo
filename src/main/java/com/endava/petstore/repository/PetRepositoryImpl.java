@@ -8,12 +8,12 @@ import com.endava.petstore.model.Pet;
 import com.endava.petstore.model.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.PostConstruct;
 import java.util.*;
 
-import static com.endava.petstore.constants.Constants.PET_NOT_FOUND;
-import static com.endava.petstore.constants.Constants.PET_UPDATED;
+import static com.endava.petstore.constants.Constants.*;
 
 @Repository
 public class PetRepositoryImpl implements PetRepository {
@@ -105,5 +105,15 @@ public class PetRepositoryImpl implements PetRepository {
         pet.setName(name);
         pet.setStatus(PetStatus.valueOf(status));
         return new HttpResponse(HttpStatus.OK.value(), "unknown", String.format(PET_UPDATED, id));
+    }
+
+    @Override
+    public HttpResponse uploadImage(Long id, String additionalMetadata, MultipartFile file) {
+        Pet pet = findById(id);
+        List<String> photoUrls = new ArrayList<>(pet.getPhotoUrls());
+        photoUrls.add(String.format("https://www.petstore.com/%s", file.getOriginalFilename()));
+        pet.setPhotoUrls(photoUrls);
+        save(pet);
+        return new HttpResponse(HttpStatus.OK.value(), "unknown", String.format(PET_UPLOADED_IMAGE, additionalMetadata, file.getOriginalFilename(), file.getSize()));
     }
 }
