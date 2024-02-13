@@ -44,4 +44,30 @@ public class UserController implements UserApi {
         userService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
+
+    @Override @PostMapping(value = "/createWithArray", consumes = {APPLICATION_JSON_VALUE, APPLICATION_XML_VALUE})
+    public ResponseEntity<List<User>> saveAll(@RequestBody @Valid User[] users) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(userService.saveAll(users));
+    }
+
+    @Override @PostMapping(value = "/createWithList", consumes = {APPLICATION_JSON_VALUE, APPLICATION_XML_VALUE})
+    public ResponseEntity<List<User>> saveAll(@RequestBody @Valid List<User> users) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(userService.saveAll(users));
+    }
+
+    @Override @GetMapping("/username/{username}")
+    public ResponseEntity<User> findByUsername(@PathVariable String username) {
+        return ResponseEntity.ok(userService.findByUsername(username));
+    }
+
+    @Override @PutMapping(value = "/username/{username}", consumes = {APPLICATION_JSON_VALUE, APPLICATION_XML_VALUE})
+    public ResponseEntity<User> updateByUsername(@RequestBody @Valid User user, @PathVariable String username) {
+        return ResponseEntity.ok(userService.updateByUsername(user, username));
+    }
+
+    @Override @DeleteMapping("/username/{username}")
+    public ResponseEntity<Void> deleteByUsername(@PathVariable String username) {
+        userService.deleteByUsername(username);
+        return ResponseEntity.noContent().build();
+    }
 }

@@ -36,4 +36,29 @@ public class UserServiceImpl implements UserService {
     public void deleteById(Long id) {
         userRepository.deleteById(id);
     }
+
+    @Override
+    public List<User> saveAll(User[] users) {
+        return userRepository.saveAll(users);
+    }
+
+    @Override
+    public List<User> saveAll(List<User> users) {
+        return userRepository.saveAll(users);
+    }
+
+    @Override
+    public User findByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+
+    @Override
+    public User updateByUsername(User user, String username) {
+        return userRepository.updateByUsername(user, username);
+    }
+
+    @Override
+    public void deleteByUsername(String username) {
+        userRepository.deleteByUsername(username);
+    }
 }

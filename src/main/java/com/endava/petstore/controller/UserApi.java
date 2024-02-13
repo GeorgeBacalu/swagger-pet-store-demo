@@ -43,4 +43,38 @@ public interface UserApi {
           @ApiResponse(code = 400, message = "Invalid ID supplied"),
           @ApiResponse(code = 404, message = "User not found")})
     ResponseEntity<Void> deleteById(@ApiParam(value = "User ID to delete", example = "1", required = true) Long id);
+
+    @ApiOperation(value = "Create list of users with given input array", response = List.class)
+    @ApiResponses(value = {
+          @ApiResponse(code = 201, message = "Successful operation"),
+          @ApiResponse(code = 405, message = "Invalid input")})
+    ResponseEntity<List<User>> saveAll(@ApiParam(value = "List of user objects", required = true) User[] users);
+
+    @ApiOperation(value = "Create list of users with given input list", response = List.class)
+    @ApiResponses(value = {
+          @ApiResponse(code = 201, message = "Successful operation"),
+          @ApiResponse(code = 405, message = "Invalid input")})
+    ResponseEntity<List<User>> saveAll(@ApiParam(value = "List of user objects", required = true) List<User> users);
+
+    @ApiOperation(value = "Get user by username", response = User.class)
+    @ApiResponses(value = {
+          @ApiResponse(code = 200, message = "Successful operation"),
+          @ApiResponse(code = 400, message = "Invalid username supplied"),
+          @ApiResponse(code = 404, message = "User not found")})
+    ResponseEntity<User> findByUsername(@ApiParam(value = "Username that needs to be fetched. Use Username1 for testing", required = true) String username);
+
+    @ApiOperation(value = "Update user by username", notes = "This can only be done by the logged in user", response = User.class)
+    @ApiResponses(value = {
+          @ApiResponse(code = 200, message = "Successful operation"),
+          @ApiResponse(code = 400, message = "Invalid username supplied"),
+          @ApiResponse(code = 404, message = "User not found")})
+    ResponseEntity<User> updateByUsername(@ApiParam(value = "Updated user object", required = true) User user,
+                                          @ApiParam(value = "Username that needs to be updated", required = true) String username);
+
+    @ApiOperation(value = "Delete user by username", notes = "This can only be done by the logged in user")
+    @ApiResponses(value = {
+          @ApiResponse(code = 200, message = "Successful operation"),
+          @ApiResponse(code = 400, message = "Invalid username supplied"),
+          @ApiResponse(code = 404, message = "User not found")})
+    ResponseEntity<Void> deleteByUsername(@ApiParam(value = "Username that needs to be deleted", required = true) String username);
 }

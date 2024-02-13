@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.endava.petstore.constants.Constants.USERNAME_NOT_FOUND;
 import static com.endava.petstore.constants.Constants.USER_NOT_FOUND;
 
 @Repository
@@ -71,6 +72,47 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public User update(User user) {
         User userToUpdate = findById(user.getId());
+        return getUpdatedUser(user, userToUpdate);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        User userToDelete = findById(id);
+        users.remove(userToDelete.getId());
+    }
+
+    @Override
+    public List<User> saveAll(User[] users) {
+        List<User> userList = new ArrayList<>();
+        for (User user : users) {
+            userList.add(save(user));
+        }
+        return userList;
+    }
+
+    @Override
+    public List<User> saveAll(List<User> users) {
+        return users.stream().map(this::save).toList();
+    }
+
+    @Override
+    public User findByUsername(String username) {
+        return findAll().stream().filter(user -> user.getUsername().equals(username)).findFirst().orElseThrow(() -> new ResourceNotFoundException(String.format(USERNAME_NOT_FOUND, username)));
+    }
+
+    @Override
+    public User updateByUsername(User user, String username) {
+        User userToUpdate = findByUsername(username);
+        return getUpdatedUser(user, userToUpdate);
+    }
+
+    @Override
+    public void deleteByUsername(String username) {
+        User userToDelete = findByUsername(username);
+        users.remove(userToDelete.getId());
+    }
+
+    private User getUpdatedUser(User user, User userToUpdate) {
         userToUpdate.setUsername(user.getUsername());
         userToUpdate.setFirstName(user.getFirstName());
         userToUpdate.setLastName(user.getLastName());
@@ -79,11 +121,5 @@ public class UserRepositoryImpl implements UserRepository {
         userToUpdate.setPhone(user.getPhone());
         userToUpdate.setStatus(user.getStatus());
         return userToUpdate;
-    }
-
-    @Override
-    public void deleteById(Long id) {
-        User userToDelete = findById(id);
-        users.remove(userToDelete.getId());
     }
 }
