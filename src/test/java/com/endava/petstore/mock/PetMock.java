@@ -54,4 +54,17 @@ public class PetMock {
               .status(PetStatus.SOLD)
               .build();
     }
+
+    public static Pet getMockedPet4() {
+        return Pet.builder()
+              .id(4L)
+              .name("Pet4")
+              .category(Category.builder().id(4L).name("Category4").build())
+              .photoUrls(List.of("https://www.petstore.com/image7.png", "https://www.petstore.com/image8.png"))
+              .tags(List.of(
+                    Tag.builder().id(7L).name("Tag7").build(),
+                    Tag.builder().id(8L).name("Tag8").build()))
+              .status(PetStatus.SOLD)
+              .build();
+    }
 }

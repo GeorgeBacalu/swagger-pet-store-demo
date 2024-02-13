@@ -1,18 +1,18 @@
-package com.endava.petstore.service;
+package com.endava.petstore.integration.service;
 
 import com.endava.petstore.enums.PetStatus;
 import com.endava.petstore.exception.ResourceNotFoundException;
 import com.endava.petstore.model.HttpResponse;
 import com.endava.petstore.model.Pet;
 import com.endava.petstore.repository.PetRepository;
+import com.endava.petstore.service.PetServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,13 +29,13 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 import static org.springframework.http.MediaType.IMAGE_JPEG_VALUE;
 
-@ExtendWith(MockitoExtension.class)
-class PetServiceImplTest {
+@SpringBootTest
+class PetServiceIntegrationTest {
 
-    @InjectMocks
+    @Autowired
     private PetServiceImpl petService;
 
-    @Mock
+    @MockBean
     private PetRepository petRepository;
 
     @Captor

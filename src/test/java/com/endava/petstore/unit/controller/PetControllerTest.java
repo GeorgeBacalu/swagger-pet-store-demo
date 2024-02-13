@@ -1,5 +1,6 @@
-package com.endava.petstore.controller;
+package com.endava.petstore.unit.controller;
 
+import com.endava.petstore.controller.PetController;
 import com.endava.petstore.enums.PetStatus;
 import com.endava.petstore.model.HttpResponse;
 import com.endava.petstore.model.Pet;

@@ -116,4 +116,9 @@ public class PetRepositoryImpl implements PetRepository {
         save(pet);
         return new HttpResponse(HttpStatus.OK.value(), "unknown", String.format(PET_UPLOADED_IMAGE, additionalMetadata, file.getOriginalFilename(), file.getSize()));
     }
+
+    @Override
+    public void deleteAll() {
+        pets.clear();
+    }
 }

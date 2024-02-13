@@ -16,4 +16,6 @@ public class Constants {
 
     public static final Long VALID_ID = 1L;
     public static final Long INVALID_ID = 999L;
+
+    public static final String API_PETS = "/pet";
 }

@@ -26,4 +26,6 @@ public interface PetRepository {
     HttpResponse updateWithFormData(Long id, String name, String status);
 
     HttpResponse uploadImage(Long id, String additionalMetadata, MultipartFile file);
+
+    void deleteAll();
 }
