@@ -108,15 +108,13 @@ class PetRepositoryIntegrationTest {
     void updateWithFormData_shouldModifyPetUsingFormData() {
         String name = "Test pet";
         String status = "AVAILABLE";
-        HttpResponse httpResponse = new HttpResponse(HttpStatus.OK.value(), "unknown", String.format(PET_UPDATED, VALID_ID));
-        then(petRepository.updateWithFormData(VALID_ID, name, status)).isEqualTo(httpResponse);
+        then(petRepository.updateWithFormData(VALID_ID, name, status)).isEqualTo(new HttpResponse(HttpStatus.OK.value(), "unknown", String.format(PET_UPDATED, VALID_ID)));
     }
 
     @Test
     void uploadImage_shouldAppendToPetPhotoUrls() {
         String additionalMetadata = "Test image";
         MultipartFile file = new MockMultipartFile("file", "test_image.png", IMAGE_JPEG_VALUE, "content".getBytes());
-        HttpResponse httpResponse = new HttpResponse(HttpStatus.OK.value(), "unknown", String.format(PET_UPLOADED_IMAGE, additionalMetadata, file.getOriginalFilename(), file.getSize()));
-        then(petRepository.uploadImage(VALID_ID, additionalMetadata, file)).isEqualTo(httpResponse);
+        then(petRepository.uploadImage(VALID_ID, additionalMetadata, file)).isEqualTo(new HttpResponse(HttpStatus.OK.value(), "unknown", String.format(PET_UPLOADED_IMAGE, additionalMetadata, file.getOriginalFilename(), file.getSize())));
     }
 }

@@ -105,7 +105,7 @@ class StoreControllerIntegrationTest {
     }
 
     @Test
-    void deleteOrderById_test() throws Exception {
+    void deleteOrderById_validId_test() throws Exception {
         ResponseEntity<Order> deleteResponse = testRestTemplate.exchange(API_STORE + "/" + VALID_ID, HttpMethod.DELETE, null, Order.class);
         then(deleteResponse).isNotNull();
         then(deleteResponse.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
