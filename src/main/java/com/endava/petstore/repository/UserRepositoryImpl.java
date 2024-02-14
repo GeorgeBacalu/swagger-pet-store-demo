@@ -137,6 +137,11 @@ public class UserRepositoryImpl implements UserRepository {
         return new HttpResponse(HttpStatus.OK.value(), "unknown", String.format(USER_LOGGED_OUT, System.nanoTime()));
     }
 
+    @Override
+    public void deleteAll() {
+        users.clear();
+    }
+
     private User getUpdatedUser(User user, User userToUpdate) {
         userToUpdate.setUsername(user.getUsername());
         userToUpdate.setFirstName(user.getFirstName());

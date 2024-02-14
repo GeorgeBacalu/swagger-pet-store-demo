@@ -30,4 +30,6 @@ public interface UserRepository {
     HttpResponse login(String username, String password);
 
     HttpResponse logout(String username);
+
+    void deleteAll();
 }
