@@ -24,6 +24,8 @@ public class Constants {
 
     public static final Long VALID_ID = 1L;
     public static final Long INVALID_ID = 999L;
+    public static final String VALID_USERNAME = "Username1";
+    public static final String INVALID_USERNAME = "Username999";
 
     public static final String API_PETS = "/pet";
     public static final String API_STORE = "/store";
